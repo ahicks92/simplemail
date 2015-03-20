@@ -52,3 +52,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#Our database, which will be modified every time we run manage.py runserver:
+cen4010/db.sqlite3
