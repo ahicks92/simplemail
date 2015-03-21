@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 
+
 #This is a model of an e-mail which includes all of the information we need from it, flattened into a giant e-mail table.
 #The stuff about replying won't be used for a while if at all, but adding it later may be somewhat difficult.
 #Also, there's basically no limits on lengths by the e-mail specs. Consequently we have to overuse TextField.
@@ -16,20 +17,18 @@ class Email(models.Model):
     #There is no body field in this model.  We get it from here.
     mailgun_json =models.TextField()
 
-    #The next message in the reply chain.
-    #If there isn't one, this returns None when accessed.
-    in_reply_to = models.OneToOneField('self', null=True)
+    #This establishes .thread and .latest.
+    latest=models.ForeignKey('self', related_name ='thread', null= True, default = None)
 
     #The message_id is used for constructing reply chains and is extracted from a mail header.
     message_id=models.TextField()
 
     subject =models.TextField()
     date=models.DateTimeField(auto_now_add=True)
-    #From is a Python key word. We apply the same naming scheme to to in order to avoid special cases.
+    #From is a Python key word.
     from_address = models.TextField()
-    to_address =models.TextField()
+    recipients= models.TextField()
 
-#This is a user's profile.
 class userProfile(models.Model):
 
     #The user's e-mail address, not including anything after the @ symbol.
@@ -38,7 +37,7 @@ class userProfile(models.Model):
     first_name=models.CharField(max_length=255)
     last_name= models.CharField(max_length=255)
     signature= models.TextField()
-
+    owned_emails = models.ManyToManyField(Email, related_name ='for_users')
 
     #This establishes a link with the user account for this profile.
     #It also adds a .profile to all users under this Django project.
