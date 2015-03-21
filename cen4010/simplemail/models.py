@@ -27,9 +27,11 @@ class Email(models.Model):
     date=models.DateTimeField(auto_now_add=True)
     #From is a Python key word.
     from_address = models.TextField()
-    recipients= models.TextField()
+    #This is a very ugly concatenation of a bunch of stuff.
+    #The result is a comma-separated list of e-mail addresses plus some extra data.
+    all_addresses = models.TextField()
 
-class userProfile(models.Model):
+class UserProfile(models.Model):
 
     #The user's e-mail address, not including anything after the @ symbol.
     email = models.CharField(max_length=255)

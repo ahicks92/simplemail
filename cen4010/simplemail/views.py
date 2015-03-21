@@ -43,6 +43,16 @@ def get_all_mailgun_messages(request):
             subject=i['subject'],
             from_address=i['from'],
         )
+        #Build up a ist of all the e-mail addresses involved in this e-mail.
+        all_addresses = i['from']+","+i['To']
+        new_message.all_addresses= all_addresses
         new_message.save()
+        #Next, build the thread by pointing all messages at the latest.
+        for j in models.Email.objects.filter(message_id__in = list(in_thread)):
+            j.latest = new_message
+            j.save()
+        #Finally, handle users.
+        user_emails= [j.strip() for j in i['recipients'].split(",")]
+        new_message.users = list(models.UserProfile.objects.filter(email__in = user_emails))
         count +=1
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
