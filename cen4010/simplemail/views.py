@@ -53,6 +53,10 @@ def get_all_mailgun_messages(request):
             j.save()
         #Finally, handle users.
         user_emails= [j.strip() for j in i['recipients'].split(",")]
-        new_message.users = list(models.UserProfile.objects.filter(email__in = user_emails))
+        users=list(models.UserProfile.objects.filter(email__in = user_emails))
+        new_message.for_users = users
+        new_message.save()
+        for u in users:
+            u.save()
         count +=1
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
