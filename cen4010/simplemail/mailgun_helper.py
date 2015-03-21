@@ -6,7 +6,7 @@ import json
 
 mailgun_key=os.getenv('mailgun_key')
 domain ="simplemail.camlorn.net"
-base_url="https://api.mailgun.com/{0}/v3".format(domain)
+base_url="https://api.mailgun.net/v3/{0}/".format(domain)
 auth=requests.auth.HTTPBasicAuth('api', mailgun_key)
 
 def mget(endpoint):
