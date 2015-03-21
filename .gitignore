@@ -55,3 +55,5 @@ target/
 
 #Our database, which will be modified every time we run manage.py runserver:
 cen4010/db.sqlite3
+#magic batch file of authentication magic that contains sensitive information.
+authenticate.bat
