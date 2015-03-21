@@ -4,6 +4,8 @@ from .mailgun_helper import *
 from . import models
 import email
 import re
+import django.contrib.auth as auth
+from django.contrib.auth.decorators import login_required
 
 #Downloads all messages from Mailgun and returns success or failure.
 @transaction.atomic
@@ -60,3 +62,12 @@ def get_all_mailgun_messages(request):
             u.save()
         count +=1
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
+
+@login_required
+def inbox(request):
+    messages= request.user.userprofile.owned_emails.all().order_by('-date')
+    return render(request, "simplemail/inbox.html", {'messages': messages})
+
+@login_required
+def view_message(request, message_id):
+    pass
