@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Inbox</title>
+</head>
+<body>
+<table>
+{%for m in messages%}
+<tr>
+<td><a href={%url "view_message" m.id%}>{{m.subject}}</td>
+<td>{{m.date}}</td>
+<td>{{m.from_address}}</td>
+</body>
+</html>
