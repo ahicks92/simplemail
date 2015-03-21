@@ -19,6 +19,8 @@ class Migration(migrations.Migration):
                 ('was_sent', models.BooleanField(default=False)),
                 ('mailgun_json', models.TextField()),
                 ('message_id', models.TextField()),
+                ('subject', models.TextField()),
+                ('date', models.DateTimeField(auto_now_add=True)),
                 ('in_reply_to', models.OneToOneField(null=True, to='simplemail.Email')),
             ],
             options={

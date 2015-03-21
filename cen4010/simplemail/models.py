@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
+
 #This is a model of an e-mail which includes all of the information we need from it, flattened into a giant e-mail table.
 #The stuff about replying won't be used for a while if at all, but adding it later may be somewhat difficult.
 #Also, there's basically no limits on lengths by the e-mail specs. Consequently we have to overuse TextField.
@@ -20,6 +22,9 @@ class Email(models.Model):
 
     #The message_id is used for constructing reply chains and is extracted from a mail header.
     message_id=models.TextField()
+
+    subject =models.TextField()
+    date=models.DateTimeField(auto_now_add=True)
 
 #This is a user's profile.
 class userProfile(models.Model):
