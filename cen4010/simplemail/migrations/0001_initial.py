@@ -21,6 +21,8 @@ class Migration(migrations.Migration):
                 ('message_id', models.TextField()),
                 ('subject', models.TextField()),
                 ('date', models.DateTimeField(auto_now_add=True)),
+                ('from_address', models.TextField()),
+                ('to_address', models.TextField()),
                 ('in_reply_to', models.OneToOneField(null=True, to='simplemail.Email')),
             ],
             options={

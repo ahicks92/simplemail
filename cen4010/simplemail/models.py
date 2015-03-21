@@ -25,6 +25,9 @@ class Email(models.Model):
 
     subject =models.TextField()
     date=models.DateTimeField(auto_now_add=True)
+    #From is a Python key word. We apply the same naming scheme to to in order to avoid special cases.
+    from_address = models.TextField()
+    to_address =models.TextField()
 
 #This is a user's profile.
 class userProfile(models.Model):
