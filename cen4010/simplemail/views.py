@@ -7,6 +7,7 @@ import re
 import django.contrib.auth as auth
 from django.contrib.auth.decorators import login_required
 
+
 #Downloads all messages from Mailgun and returns success or failure.
 @transaction.atomic
 def get_all_mailgun_messages(request):
@@ -71,3 +72,7 @@ def inbox(request):
 @login_required
 def view_message(request, message_id):
     pass
+
+""" This View will be the home page to the application"""
+def index(request):
+    return render(request, 'registration/index.html')
