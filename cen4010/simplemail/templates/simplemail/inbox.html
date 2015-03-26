@@ -1,15 +1,14 @@
-<html>
-<head>
-<title>Inbox</title>
-</head>
-<body>
-<table>
-{%for m in messages%}
-<tr>
-<td><a href={%url "view_message" m.id%}>{{m.subject}}</td>
-<td>{{m.date}}</td>
-<td>{{m.from_address}}</td>
-{%endfor%}
-</table>
-</body>
-</html>
+{% extends "base_application.html" %}
+
+{% block page %}
+    <table>
+        {%for m in messages%}
+        <tr>
+            <td><a href={%url "view_message" m.id%}>{{m.subject}}</td>
+            <td>{{m.from_address}}</td>
+            <td>{{m.date}}</td>
+            <td>{{message_body}}</td>
+            <!-- <td>{{m.mailgun_json}}</td>-->
+        {%endfor%}
+    </table>
+{% endblock page %}
