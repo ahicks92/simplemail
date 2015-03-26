@@ -1,3 +1,4 @@
+<!-- The base template where all other templates inherit from -->
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -9,19 +10,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
     <!-- load static files -->
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'simplemail/style.css' %}" />
+    {% block styles %}
+    {% endblock styles %}
+
 </head>
 <body>
-
-    <div class="sidebar">
-         {% block sidebar %}{% endblock %}
-    </div>
-
-    <div class="content">
-         {% block content %}{% endblock %}
-    </div>
-
-
+    {% block body %}
+    {% endblock body %}
 </body>
 </html>
