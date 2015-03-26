@@ -1,11 +1,21 @@
-<!-- This will serve as the base template for the main screen of the app -->
+<!-- Inherits from the base template. Extends functionality to include a sidebar, content panel and footer panel -->
 {% extends "base.html" %}
 
+{% block styles %}
+{% endblock styles %}
 
-{% block sidebar %}
+    {% block body %}
+        <div class="wrapper">
+            <div class="sidebar">
+                 {% block sidebar %}{% endblock %}
+            </div><!-- /.sidebar -->
 
-{% endblock sidebar %}
+            <div class="content">
+                 {% block content %}{% endblock %}
+            </div><!-- /.content -->
 
-{% block content %}
+            {% block footer %}
 
-{% endblock content %}
+            {% endblock footer %}
+        </div> <!-- /.wrapper -->
+    {% endblock body %}
