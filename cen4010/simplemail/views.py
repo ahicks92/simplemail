@@ -76,6 +76,6 @@ def view_message(request, message_id):
     message_body = message_json["stripped-text"]
     return render(request, "simplemail/view_message.html", {'message': message_body})
 
-""" This View will be the home page to the application"""
 def index(request):
+    """ This View will be the home page to the application"""
     return render(request, 'registration/index.html')
