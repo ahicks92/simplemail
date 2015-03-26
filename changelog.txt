@@ -1,0 +1,26 @@
+CHANGE LOG
+***********
+
+3/26/2015
+Created the following tempaltes:
+base.html (the base tempalte all others will inherit from)
+base_main.html (inherits from base, used to setup the framework of the main application pages to be implemented)
+base_application.html (inherits from base_main. Provides the implementation of the application)
+
+Created the following html pages:
+index.html (extends the base page. This will be what users see when they enter the main url, for now its localhost:8000, its used as a landing page for the application. It will give users a brief description and provide buttons for login/register)
+login.html (provides the where with a login form and registration button, login works however redirection still needs implementing for both successful login and registration)
+view_message.html (displays the message, currently just a framework. Needs more implementation)
+inbox.html (had the file extend the base_application.html template, still needs styling)
+
+Created the following stylesheets:
+index.css (The styling for the homepage, index.html)
+login.css (The styling for the login page)
+style.css (The styling for the main application)
+
+Changed the following views
+views.py
+def view_message(request,message_id)
+-- changed it so this view gets the email associated with a message id, then converts it to a django dictionary? and then gets the message body which becomes the context of the view to be returned
+-- This was implemented as a test for the view message view. I believe this should be implemented in the Email model. This way the context can be the email itself so in the template I can grab all the necessary fields and format the message correctly
+
