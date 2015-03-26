@@ -1,0 +1,46 @@
+<!-- This will serve as the base template for the main screen of the application -->
+{% extends "base_main.html" %}
+
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'simplemail/style.css' %}" />
+{% endblock styles %}
+
+<!-- <div class='wrapper'> -->
+<!-- <div class='sidebar'> -->
+{% block sidebar %}
+    <ul class="sidebar-nav">
+        <li class="side-btn"><a class="btn btn-default">Inbox</a></li>
+        <li class="side-btn"><a class="btn btn-default">Send Message</a></li>
+        <li class="side-btn"><a class="btn btn-default">Trash</a></li>
+        <li class="side-btn"><a class="btn btn-default">Logout</a></li>
+    </ul>
+{% endblock sidebar %}
+<!-- </div> END SIDEBAR -->
+
+<!-- <div class='content'> -->
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                {% block page %}{% endblock page %}
+            </div><!-- /.col-lg-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+{% endblock content %}
+<!-- </div> END CONTENT -->
+
+{% block footer %}
+    <footer class="footer">
+        <div class="row">
+        <ul class="bottombar-nav">
+            <li class="bottom-btn"><a class="btn btn-default">Button 1</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Button 2</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Button 3</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Button 4</a></li>
+         </ul>
+        </div>
+    </footer>
+{% endblock footer %}
+
+<!-- </div> END WRAPPER -->
