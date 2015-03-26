@@ -6,7 +6,7 @@ import email
 import re
 import django.contrib.auth as auth
 from django.contrib.auth.decorators import login_required
-
+import json
 
 #Downloads all messages from Mailgun and returns success or failure.
 @transaction.atomic
@@ -71,7 +71,10 @@ def inbox(request):
 
 @login_required
 def view_message(request, message_id):
-    pass
+    message=request.user.userprofile.owned_emails.get(pk=message_id)
+    message_json = json.loads(message.mailgun_json)
+    message_body = message_json["stripped-text"]
+    return render(request, "simplemail/view_message.html", {'message': message_body})
 
 """ This View will be the home page to the application"""
 def index(request):
