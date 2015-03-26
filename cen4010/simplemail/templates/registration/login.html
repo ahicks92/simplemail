@@ -1,4 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_main.html" %}
+
+{% block styles %}
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'simplemail/login.css' %}" />
+{% endblock styles %}
 
 {% block content %}
 	<form class="login" action="/accounts/login/" method="post">
