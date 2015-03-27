@@ -45,6 +45,9 @@ def get_all_mailgun_messages(request):
             message_id=id,
             subject=i['subject'],
             from_address=i['from'],
+            body =i['body-plain'],
+            body_stripped = i['stripped-text'] if 'stripped-text' in i else i['body-plain'],
+            signature= i['stripped-signature'] if 'stripped-signature' in i else "",
         )
         #Build up a ist of all the e-mail addresses involved in this e-mail.
         all_addresses = i['from']+","+i['To']

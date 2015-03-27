@@ -14,11 +14,7 @@ class Email(models.Model):
 
     #The Mailgun API sends us blobs of text. We pull out the really important info for database queries.
     #Even so, keeping this around lets us do post-processing on it.
-    #There is no body field in this model.  We get it from here.
     mailgun_json =models.TextField()
-
-    #This establishes .thread and .latest.
-    latest=models.ForeignKey('self', related_name ='thread', null= True, default = None)
 
     #The message_id is used for constructing reply chains and is extracted from a mail header.
     message_id=models.TextField()
@@ -30,6 +26,11 @@ class Email(models.Model):
     #This is a very ugly concatenation of a bunch of stuff.
     #The result is a comma-separated list of e-mail addresses plus some extra data.
     all_addresses = models.TextField()
+
+    #E-mail body.
+    body = models.TextField()
+    body_stripped=models.TextField()
+    signature =models.TextField()
 
 class UserProfile(models.Model):
 
