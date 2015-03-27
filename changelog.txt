@@ -24,3 +24,17 @@ def view_message(request,message_id)
 -- changed it so this view gets the email associated with a message id, then converts it to a django dictionary? and then gets the message body which becomes the context of the view to be returned
 -- This was implemented as a test for the view message view. I believe this should be implemented in the Email model. This way the context can be the email itself so in the template I can grab all the necessary fields and format the message correctly
 
+
+3/26/2015 20:39
+
+We now have:
+-Email.body, containing the body of the e-mail as text.
+-email.body_stripped, containing the stripped body.  This is the body without the signature part and is something that mailgun sometimes gives.
+- Email.signature containing the signature block, if any.  This is also only given to us sometimes, it's set to "" if we don't have it
+
+I anticipate that we will only use body, but it was easiest to add them all now.
+
+In addition, it's now request.user.profile and request.user.profile.emails, which is way cleaner.
+
+And the view for displaying a message works with models.
+
