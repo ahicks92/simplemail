@@ -40,8 +40,9 @@ class UserProfile(models.Model):
     first_name=models.CharField(max_length=255)
     last_name= models.CharField(max_length=255)
     signature= models.TextField()
-    owned_emails = models.ManyToManyField(Email, related_name ='for_users')
+    #The e-mails that this user can view and/or manipulate.
+    emails = models.ManyToManyField(Email, related_name ='for_users')
 
     #This establishes a link with the user account for this profile.
     #It also adds a .profile to all users under this Django project.
-    user= models.OneToOneField(User)
+    user= models.OneToOneField(User, related_name= 'profile')
