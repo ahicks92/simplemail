@@ -69,15 +69,13 @@ def get_all_mailgun_messages(request):
 
 @login_required
 def inbox(request):
-    messages= request.user.userprofile.owned_emails.all().order_by('-date')
+    messages= request.user.profile.emails.all().order_by('-date')
     return render(request, "simplemail/inbox.html", {'messages': messages})
 
 @login_required
 def view_message(request, message_id):
-    message=request.user.userprofile.owned_emails.get(pk=message_id)
-    message_json = json.loads(message.mailgun_json)
-    message_body = message_json["stripped-text"]
-    return render(request, "simplemail/view_message.html", {'message': message_body})
+    message=request.user.profile.owned_emails.get(pk=message_id)
+    return render(request, "simplemail/view_message.html", {'message': message})
 
 def index(request):
     """ This View will be the home page to the application"""
