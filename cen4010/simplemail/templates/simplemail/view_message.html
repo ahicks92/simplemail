@@ -1,11 +1,14 @@
 {% extends "simplemail/base_application.html" %}
 
 {% block page %}
-    <table>
-        <tr>
-            <p>{{message}}</p>
-            <!-- <td>{{m.mailgun_json}}</td>-->
-    </table>
+{%autoescape on%}
+<h1>{{message.subject}}</h1>
+<ul>
+<li>From: {{message.from_address}}</li>
+<li>Date: {{message.date}}</li>
+</ul>
+{{message.body | linebreaks}}
+{%endautoescape%}
 {% endblock page %}
 
 {% block footer %}
