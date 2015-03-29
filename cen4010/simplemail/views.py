@@ -8,6 +8,7 @@ import django.contrib.auth as auth
 from django.contrib.auth.decorators import login_required
 import json
 import simplemail.forms
+import flanker.addresslib
 
 @transaction.atomic
 def get_all_mailgun_messages(request):
