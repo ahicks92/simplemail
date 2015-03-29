@@ -79,3 +79,8 @@ def view_message(request, message_id):
     message=request.user.profile.emails.get(pk=message_id)
     return render(request, "simplemail/view_message.html", {'message': message})
 
+
+@login_required
+@transaction.atomic
+def send_message(request):
+    pass
