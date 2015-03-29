@@ -14,4 +14,14 @@ def mget(endpoint, prepend=True):
 
 def mpost(endpoint, data, prepend = True):
     """Data is a dict which is encoded to JSON by this function."""
-    return requests.post(base_url+endpoint if prepend else endpoint, json=json.dumps(data), auth=auth)
+    return requests.post(base_url+endpoint if prepend else endpoint, auth=auth)
+
+def send_email(from_address, to_addresses, subject, body):
+    """to_addresses may be a Python list of e-mail addresses"""
+    data = {
+    'to': emails,
+    'from': 'test@simplemail.camlorn.net',
+    'text': body,
+    'subject': subject,
+    }
+    return mpost("/messages", data)
