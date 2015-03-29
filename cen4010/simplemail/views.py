@@ -77,6 +77,3 @@ def view_message(request, message_id):
     message=request.user.profile.emails.get(pk=message_id)
     return render(request, "simplemail/view_message.html", {'message': message})
 
-def index(request):
-    """ This View will be the home page to the application"""
-    return render(request, 'registration/index.html')
