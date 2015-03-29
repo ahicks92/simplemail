@@ -1,0 +1,10 @@
+{%extends "simplemail/base_application.html"%}
+{%block page%}
+    <h1>Send a Message</h1>
+    <form action="%{url send_message%}" method="post">
+        <ul>
+            {{form.as_ul}}
+        </ul>
+        <input type="submit", value="Send Message"/>
+    </form>
+{%endblock page%}

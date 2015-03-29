@@ -83,4 +83,10 @@ def view_message(request, message_id):
 @login_required
 @transaction.atomic
 def send_message(request):
-    pass
+    if request.method== 'GET':
+        form=simplemail.forms.SendEmailForm()
+        return render(request, "simplemail/send_message.html", {'form': form})
+    if request.method== 'POST':
+        form=simplemail.forms.SendEmailForm(request.POST)
+        if not form.is_valid():
+            return render(request, "simplemail/send_message.html", {'form': form})
