@@ -1,3 +1,4 @@
+import pdb
 from django.shortcuts import render
 from django.db import transaction
 from .mailgun_helper import *
@@ -91,3 +92,10 @@ def send_message(request):
         form=simplemail.forms.SendEmailForm(request.POST)
         if not form.is_valid():
             return render(request, "simplemail/send_message.html", {'form': form})
+        #Okay, we can send the e-mail.
+        result=send_email(request.user.profile.email, [i.to_unicode() for i in form.cleaned_data['to']],
+            form.cleaned_data['subject'], form.cleaned_data['message'])
+        message="Your message has been sent."
+        if result.status_code!=200: #mailgun error.
+            message= "Sorry, but something has gone wrong.  Please send us the following info:\n\n"+result.json()['message']
+        return render(request, "simplemail/message.html", {'message': message})
