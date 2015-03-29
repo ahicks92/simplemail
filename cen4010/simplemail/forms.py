@@ -3,19 +3,16 @@ from flanker.addresslib import address
 
 class MultiEmailField(forms.CharField):
     def to_python(self, value):
-        return address.parse_ist(value, as_tuple=True)[0]
-
-    def validate(self, value):
-        super(MultiEmailField, self).validate(value)
         parsed_addresses, unparsed_addresses = address.parse_list(value, as_tuple =True)
         if len(unparsed_addresses)> 0:
             if len(unparsed_addresses)== 1:
-                message= "{} is not a valid e-mail address".format(unparsed_addresses[0])
+                message= u"{} is not a valid e-mail address".format(unparsed_addresses[0].to_unicode())
             else:
-                "{} and {} are not valid e-mail addresses".format(",".join(unparsed_addresses[:-1]), unparsed_addresses[-1])
+                u"{} and {} are not valid e-mail addresses".format(u",".join(unparsed_addresses[:-1]), unparsed_addresses[-1])
             raise forms.ValidationError(message)
         if len(parsed_addresses)==0:
-            raise forms.ValidationError("You must provide an e-mail address.")
+            raise forms.ValidationError(u"You must provide an e-mail address.")
+        return parsed_addresses
 
 class SendEmailForm(forms.Form):
     #We want to allow comma separated e-mails.
