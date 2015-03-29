@@ -68,11 +68,13 @@ def get_all_mailgun_messages(request):
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
 
 @login_required
+@transaction.atomic
 def inbox(request):
     messages= request.user.profile.emails.all().order_by('-date')
     return render(request, "simplemail/inbox.html", {'messages': messages})
 
 @login_required
+@transaction.atomic
 def view_message(request, message_id):
     message=request.user.profile.emails.get(pk=message_id)
     return render(request, "simplemail/view_message.html", {'message': message})
