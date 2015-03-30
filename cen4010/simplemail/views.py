@@ -72,15 +72,25 @@ def get_all_mailgun_messages(request):
 @login_required
 @transaction.atomic
 def inbox(request):
-    messages= request.user.profile.emails.all().order_by('-date')
+    messages= request.user.profile.inbox.all().order_by('-date')
     return render(request, "simplemail/inbox.html", {'messages': messages})
+
+#all of the following views manipulate individual messages.
+#This helper function tells us if a user owns a message.
+def can_manipulate_message(profile, message):
+    inbox = message.inbox_users.filter(pk=profile.pk).exists()
+    outbox =message.outbox_users.filter(pk=profile.pk).exists()
+    trash = message.trash_users.filter(pk=profile.pk).exists()
+    return inbox or outbox or trash
 
 @login_required
 @transaction.atomic
 def view_message(request, message_id):
-    message=request.user.profile.emails.get(pk=message_id)
-    return render(request, "simplemail/view_message.html", {'message': message})
-
+    message= models.Email.objects.get(pk=message_id)
+    if can_manipulate_message(request.user.profile, message):
+        return render(request, "simplemail/view_message.html", {'message': message})
+    else:
+        return render(request, "simplemail/message.html", {'message': "You do not have permission to view this message."})
 
 @login_required
 @transaction.atomic
