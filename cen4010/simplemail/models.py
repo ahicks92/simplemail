@@ -7,11 +7,6 @@ import datetime
 #The stuff about replying won't be used for a while if at all, but adding it later may be somewhat difficult.
 #Also, there's basically no limits on lengths by the e-mail specs. Consequently we have to overuse TextField.
 class Email(models.Model):
-    #An e-mail is either in the inbox or outbox.
-    #E-mails are in the outbox if it was sent, so we record that value.
-    #We also need sent e-mails for the ability to follow the reply chain back as necessary.
-    was_sent=models.BooleanField(default=False)
-
     #The Mailgun API sends us blobs of text. We pull out the really important info for database queries.
     #Even so, keeping this around lets us do post-processing on it.
     mailgun_json =models.TextField()
@@ -40,9 +35,12 @@ class UserProfile(models.Model):
     first_name=models.CharField(max_length=255)
     last_name= models.CharField(max_length=255)
     signature= models.TextField()
-    #The e-mails that this user can view and/or manipulate.
-    emails = models.ManyToManyField(Email, related_name ='for_users')
-
     #This establishes a link with the user account for this profile.
     #It also adds a .profile to all users under this Django project.
     user= models.OneToOneField(User, related_name= 'profile')
+
+    #inbox, outbox, and trash.
+    #Technically these should be folder models, but we only have 3 and the special case is faster:
+    inbox=models.ManyToManyField(Email, related_name='inbox_users')
+    outbox=models.ManyToManyField(Email, related_name= 'outbox_users')
+    trash=models.ManyToManyField(Email, related_name='trash_users')
