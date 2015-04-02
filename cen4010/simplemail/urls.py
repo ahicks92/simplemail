@@ -6,4 +6,5 @@ urlpatterns=patterns('',
     url(r'^inbox$', views.inbox, name='inbox'),
     url(r'^view_message/(\d+)$', views.view_message, name='view_message'),
     url(r'^send_message', views.send_message, name='send_message'),
+    url(r'^create_account', views.create_account, name='create_account'),
 )

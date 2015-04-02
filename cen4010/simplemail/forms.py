@@ -29,8 +29,8 @@ class SendEmailForm(forms.Form):
 class ReplyToEmailForm(SendEmailForm):
     in_reply_to=forms.CharField(widget=forms.HiddenInput())
 
-class userCreationFrorm(forms.Form):
-    user_name= models.CharField(min_length= 1, help_text ="Your user name for Simplemail.  Your e-mail address will be <username>@simplemail.camlorn.net.")
+class UserCreationForm(forms.Form):
+    user_name= forms.CharField(min_length= 1, help_text ="Your user name for Simplemail.  Your e-mail address will be &lt;username&gt;@simplemail.camlorn.net.")
     first_name = forms.CharField(min_length = 1)
     last_name=forms.CharField(min_length= 1)
-    signature = models.CharField(widget =forms.Textarea)
+    signature = forms.CharField(widget =forms.Textarea)

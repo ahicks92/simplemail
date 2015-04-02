@@ -69,6 +69,15 @@ def get_all_mailgun_messages(request):
         count +=1
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
 
+#Create an account.
+@transaction.atomic
+def create_account(request):
+    if request.method == 'GET':
+        form = simplemail.forms.UserCreationForm()
+        return render(request, "simplemail/create_account.html", {'form': form})
+    elif request.method== 'POST':
+        pass
+
 @login_required
 @transaction.atomic
 def inbox(request):
