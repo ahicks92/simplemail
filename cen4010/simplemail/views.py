@@ -6,6 +6,7 @@ from . import models
 import email
 import re
 import django.contrib.auth as auth
+import django.contrib.auth.models
 from django.contrib.auth.decorators import login_required
 import json
 import simplemail.forms
@@ -73,10 +74,25 @@ def get_all_mailgun_messages(request):
 @transaction.atomic
 def create_account(request):
     if request.method == 'GET':
-        form = simplemail.forms.UserCreationForm()
+        form = simplemail.forms.AccountCreationForm()
         return render(request, "simplemail/create_account.html", {'form': form})
     elif request.method== 'POST':
-        pass
+        form = simplemail.forms.AccountCreationForm(request.POST)
+        if not form.is_valid():
+            return render(request, "simplemail/create_account.html", {'form': form})
+        username=form.cleaned_data.get("user_name")
+        password= form.cleaned_data.get("password")
+        signature = form.cleaned_data.get("signature")
+        first_name= form.cleaned_data.get("first_name")
+        last_name= form.cleaned_data.get("last_name")
+        user = django.contrib.auth.models.User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password= password)
+        profile= models.UserProfile(email=username+"@simplemail.camlorn.net", first_name=first_name, last_name=last_name, signature=signature, user= user)
+        user.save()
+        profile.save()
+        #Django makes us go through the login API "properly", so we do.
+        u=auth.authenticate(username=username, password=password)
+        auth.login(request, u)
+        return render(request, "simplemail/message.html", {'message': "Your account was created successfully.  Your e-mail is {}@simplemail.camlorn.net".format(username)})
 
 @login_required
 @transaction.atomic

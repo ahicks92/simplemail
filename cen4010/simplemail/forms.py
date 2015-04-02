@@ -1,5 +1,7 @@
 from django import forms
 from flanker.addresslib import address
+import simplemail.models
+import django.contrib.auth.models
 
 class MultiEmailField(forms.Field):
     empty_values=([])
@@ -29,10 +31,17 @@ class SendEmailForm(forms.Form):
 class ReplyToEmailForm(SendEmailForm):
     in_reply_to=forms.CharField(widget=forms.HiddenInput())
 
-class UserCreationForm(forms.Form):
+class AccountCreationForm(forms.Form):
     user_name= forms.RegexField(min_length= 5, regex = r"[a-zA-Z1-90_]+", help_text ="Your user name for Simplemail.  Your e-mail address will be &lt;username&gt;@simplemail.camlorn.net.")
     password=forms.CharField(widget = forms.PasswordInput, min_length=5)
     confirm_password=forms.CharField(widget= forms.PasswordInput, min_length =5)
     first_name = forms.CharField(min_length = 1)
     last_name=forms.CharField(min_length= 1)
     signature = forms.CharField(widget =forms.Textarea)
+
+    def clean(self):
+        username=self.cleaned_data.get("user_name")
+        if django.contrib.auth.models.User.objects.filter(username= username).exists():
+            raise validationError("Your username is already in use.  Please try another.")
+        if self.cleaned_data.get("password") !=self.cleaned_data.get("confirm_password"):
+            raise ValidationError("Your password does not match with the password entered in 'confirm password'.  Please re-enter it in both fields and try again.")
