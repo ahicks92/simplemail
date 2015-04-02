@@ -4,11 +4,12 @@
     <table>
         {%for m in messages%}
         <tr>
-            <td><a href={%url "view_message" m.id%}>{{m.subject}}</td>
+            <td><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
             <td>{{m.from_address}}</td>
             <td>{{m.date}}</td>
             <td>{{message_body}}</td>
             <!-- <td>{{m.mailgun_json}}</td>-->
         {%endfor%}
+        </tr>
     </table>
 {% endblock page %}

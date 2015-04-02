@@ -9,8 +9,8 @@
 	<form class="login" action="/accounts/login/?next={{next}}" method="post">
 		{%csrf_token%}
 		{{form}}
-		<input type="submit" value="submit"/>
-        <button class="register"><a href="#">register</a></button>
-	</form>
+		<input type="submit" value="submit" class="submit"/>
 
+	</form>
+    <button class="register"><a href="#">register</a></button>
 {% endblock content %}
