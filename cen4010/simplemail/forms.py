@@ -28,3 +28,9 @@ class SendEmailForm(forms.Form):
 #This inherits all the above stuff, except that it contains a hidden field that we use to funnel an In-Reply-To header.
 class ReplyToEmailForm(SendEmailForm):
     in_reply_to=forms.CharField(widget=forms.HiddenInput())
+
+class userCreationFrorm(forms.Form):
+    user_name= models.CharField(min_length= 1, help_text ="Your user name for Simplemail.  Your e-mail address will be <username>@simplemail.camlorn.net.")
+    first_name = forms.CharField(min_length = 1)
+    last_name=forms.CharField(min_length= 1)
+    signature = models.CharField(widget =forms.Textarea)
