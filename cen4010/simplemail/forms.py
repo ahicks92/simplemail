@@ -30,7 +30,9 @@ class ReplyToEmailForm(SendEmailForm):
     in_reply_to=forms.CharField(widget=forms.HiddenInput())
 
 class UserCreationForm(forms.Form):
-    user_name= forms.CharField(min_length= 1, help_text ="Your user name for Simplemail.  Your e-mail address will be &lt;username&gt;@simplemail.camlorn.net.")
+    user_name= forms.RegexField(min_length= 5, regex = r"[a-zA-Z1-90_]+", help_text ="Your user name for Simplemail.  Your e-mail address will be &lt;username&gt;@simplemail.camlorn.net.")
+    password=forms.CharField(widget = forms.PasswordInput, min_length=5)
+    confirm_password=forms.CharField(widget= forms.PasswordInput, min_length =5)
     first_name = forms.CharField(min_length = 1)
     last_name=forms.CharField(min_length= 1)
     signature = forms.CharField(widget =forms.Textarea)
