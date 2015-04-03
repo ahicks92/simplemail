@@ -76,6 +76,7 @@ input:focus{
 
 input, label,button.register{
     display: block;
+    color:black;
 }
 
 input.submit {
@@ -92,4 +93,15 @@ button.register{
 a{
     color: black;
     text-decoration:none;
+}
+
+span.helptext {
+  position: relative;
+  bottom: 25px;
+  left: 250px;
+  color: black;
+ }
+
+ul{
+    padding: 0px;
 }
