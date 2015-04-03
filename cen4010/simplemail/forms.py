@@ -1,4 +1,6 @@
 from django import forms
+from django.core import urlresolvers
+from django.shortcuts import render
 from flanker.addresslib import address
 import simplemail.models
 import django.contrib.auth.models
@@ -32,8 +34,7 @@ class ReplyToEmailForm(SendEmailForm):
     in_reply_to=forms.CharField(widget=forms.HiddenInput())
 
 class AccountCreationForm(forms.Form):
-    #user_name= forms.RegexField(min_length= 5, regex = r"[a-zA-Z1-90_]+", help_text ="Your user name for Simplemail.  Your e-mail address will be &lt;username&gt;@simplemail.camlorn.net.")
-    user_name= forms.RegexField(min_length= 5, regex = r"[a-zA-Z1-90_]+", help_text ="@simplemail.camlorn.net")
+    user_name= forms.RegexField(min_length= 5, regex = r"[a-zA-Z1-90_]+", help_text ="Your user name for Simplemail.  Your e-mail address will be <username>@simplemail.camlorn.net.")
     password=forms.CharField(widget = forms.PasswordInput, min_length=5)
     confirm_password=forms.CharField(widget= forms.PasswordInput, min_length =5)
     first_name = forms.CharField(min_length = 1)
@@ -46,3 +47,14 @@ class AccountCreationForm(forms.Form):
             raise validationError("Your username is already in use.  Please try another.")
         if self.cleaned_data.get("password") !=self.cleaned_data.get("confirm_password"):
             raise ValidationError("Your password does not match with the password entered in 'confirm password'.  Please re-enter it in both fields and try again.")
+
+def render_account_creation_form(request, form = None):
+    if form is None:
+        form = AccountCreationForm()
+    context = {
+        'form': form,
+        'form_title': "Create an account",
+        'submit_label': "Create Account",
+        'next_url': urlresolvers.reverse("create_account"),
+    }
+    return render(request, "simplemail/form.html", context)

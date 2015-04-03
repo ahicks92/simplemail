@@ -68,12 +68,11 @@ def get_all_mailgun_messages(request):
 @transaction.atomic
 def create_account(request):
     if request.method == 'GET':
-        form = simplemail.forms.AccountCreationForm()
-        return render(request, "simplemail/create_account.html", {'form': form})
+        return simplemail.forms.render_account_creation_form(request)
     elif request.method== 'POST':
         form = simplemail.forms.AccountCreationForm(request.POST)
         if not form.is_valid():
-            return render(request, "simplemail/create_account.html", {'form': form})
+            return simplemail.forms.render_account_creation_form(request, form = form)
         username=form.cleaned_data.get("user_name")
         password= form.cleaned_data.get("password")
         signature = form.cleaned_data.get("signature")
