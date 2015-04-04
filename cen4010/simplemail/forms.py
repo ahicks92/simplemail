@@ -57,3 +57,14 @@ def render_account_creation_form(request, form = None):
         'next_url': urlresolvers.reverse("create_account"),
     }
     return render(request, "simplemail/form.html", context)
+
+def render_send_message_form(request, form = None):
+    if form is None:
+        form = SendEmailForm()
+    context = {
+        'form': form,
+        'form_title': "Send Message",
+        'submit_label': "Send",
+        'next_url': urlresolvers.reverse("send_message"),
+    }
+    return render(request, "simplemail/form.html", context)

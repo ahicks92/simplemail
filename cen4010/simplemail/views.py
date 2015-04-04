@@ -124,12 +124,11 @@ def view_message(request, message_id):
 @transaction.atomic
 def send_message(request):
     if request.method== 'GET':
-        form=simplemail.forms.SendEmailForm()
-        return render(request, "simplemail/send_message.html", {'form': form})
+        return simplemail.forms.render_send_message_form(request)
     if request.method== 'POST':
         form=simplemail.forms.SendEmailForm(request.POST)
         if not form.is_valid():
-            return render(request, "simplemail/send_message.html", {'form': form})
+            return simplemail.forms.render_send_message_form(request, form)
         #Okay, we can send the e-mail.
         result=send_email(request.user.profile.email, [i.to_unicode() for i in form.cleaned_data['to']],
             form.cleaned_data['subject'], form.cleaned_data['message'])
