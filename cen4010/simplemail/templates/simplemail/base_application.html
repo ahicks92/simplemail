@@ -10,8 +10,8 @@
 <!-- <div class='sidebar'> -->
 {% block sidebar %}
     <ul class="sidebar-nav">
-        <li class="side-btn"><a class="btn btn-default">Inbox</a></li>
-        <li class="side-btn"><a class="btn btn-default">Send Message</a></li>
+        <li class="side-btn"><a href="{%url 'inbox'%}" class="btn btn-default">Inbox</a></li>
+        <li class="side-btn"><a href="{%url 'send_message'%}" class="btn btn-default">Send Message</a></li>
         <li class="side-btn"><a class="btn btn-default">Trash</a></li>
         <li class="side-btn"><a class="btn btn-default">Logout</a></li>
     </ul>
@@ -34,10 +34,9 @@
     <footer class="footer">
         <div class="row">
         <ul class="bottombar-nav">
-            <li class="bottom-btn"><a class="btn btn-default">Button 1</a></li>
-            <li class="bottom-btn"><a class="btn btn-default">Button 2</a></li>
-            <li class="bottom-btn"><a class="btn btn-default">Button 3</a></li>
-            <li class="bottom-btn"><a class="btn btn-default">Button 4</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Delete</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Forward</a></li>
+            <li class="bottom-btn"><a class="btn btn-default">Reply</a></li>
          </ul>
         </div>
     </footer>

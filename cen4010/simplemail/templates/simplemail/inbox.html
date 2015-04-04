@@ -1,15 +1,17 @@
 {% extends "simplemail/base_application.html" %}
 
 {% block page %}
-    <table>
+   <table>
         {%for m in messages%}
-        <tr>
-            <td><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
-            <td>{{m.from_address}}</td>
-            <td>{{m.date}}</td>
-            <td>{{message_body}}</td>
-            <!-- <td>{{m.mailgun_json}}</td>-->
+     <tr>
+         <td><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
+         <td>{{m.from_address}}</td>
+         <td>{{m.date}}</td>
+         <td>{{message_body}}</td>
         {%endfor%}
-        </tr>
+     </tr>
     </table>
+
+    {% include "simplemail/base_form.html" %}
+
 {% endblock page %}

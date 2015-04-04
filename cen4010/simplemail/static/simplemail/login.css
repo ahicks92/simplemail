@@ -105,3 +105,10 @@ span.helptext {
 ul{
     padding: 0px;
 }
+
+h1{
+    color:black;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.27);
+
+}

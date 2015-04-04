@@ -1,16 +1,12 @@
-{% extends "simplemail/base_application.html" %}
+{%extends "simplemail/base_application.html"%}
 
 {% block page %}
-{%autoescape on%}
-<h1>{{message.subject}}</h1>
-<ul>
-<li>From: {{message.from_address}}</li>
-<li>Date: {{message.date}}</li>
-</ul>
-{{message.body | linebreaks}}
-{%endautoescape%}
+    {%autoescape on%}
+    <h1>{{message.subject}}</h1>
+    <ul>
+        <li>From: {{message.from_address}}</li>
+        <li>Date: {{message.date}}</li>
+    </ul>
+    {{message.body | linebreaks}}
+    {%endautoescape%}
 {% endblock page %}
-
-{% block footer %}
-
-{% endblock footer %}
