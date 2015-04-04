@@ -87,11 +87,21 @@ def create_account(request):
         auth.login(request, u)
         return render(request, "simplemail/message.html", {'message': "Your account was created successfully.  Your e-mail is {}@simplemail.camlorn.net".format(username)})
 
+def show_folder(request, messages, folder_title, action_view= None, action_text=""):
+    return render(request, "simplemail/folder.html", {
+        'messages': messages,
+        'folder_title': folder_title,
+        'has_action': action_view is not None,
+        'action_view': action_view,
+        'action_text': action_text,
+    })
+
+
 @login_required
 @transaction.atomic
 def inbox(request):
     messages= request.user.profile.inbox.all().order_by('-date')
-    return render(request, "simplemail/inbox.html", {'messages': messages})
+    return show_folder(request, messages, "Inbox", "delete_message", "Delete This Message")
 
 #all of the following views manipulate individual messages.
 #This helper function tells us if a user owns a message.
@@ -127,3 +137,8 @@ def send_message(request):
         if result.status_code!=200: #mailgun error.
             message= "Sorry, but something has gone wrong.  Please send us the following info:\n\n"+result.json()['message']
         return render(request, "simplemail/message.html", {'message': message})
+
+@login_required
+@transaction.atomic
+def delete_message(request, id):
+    pass

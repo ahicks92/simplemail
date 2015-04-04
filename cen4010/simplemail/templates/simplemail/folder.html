@@ -8,10 +8,11 @@
          <td>{{m.from_address}}</td>
          <td>{{m.date}}</td>
          <td>{{message_body}}</td>
+         {%if has_action%}
+         <td><a href="{%url action_view m.id%}">{{action_text}}</a></td>
+         {%endif%}
         {%endfor%}
      </tr>
     </table>
-
-    {% include "simplemail/base_form.html" %}
 
 {% endblock page %}
