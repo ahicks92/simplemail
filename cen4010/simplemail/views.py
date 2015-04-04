@@ -152,4 +152,18 @@ def send_message(request):
 @login_required
 @transaction.atomic
 def delete_message(request, id):
-    pass
+    message = models.Email.objects.get(pk = id)
+    if not can_manipulate_message(request.user.profile, message):
+        return render(request, "simplemail/message.html", {'message': "You cannot delete this message."})
+    p=request.user.profile
+    if p.trash.filter(pk=message.id).exists():
+        return render(request, "simplemail/message.html", {'message': "This message was already deleted."})
+    elif p.inbox.filter(pk=message.id).exists():
+        p.inbox.remove(message)
+        p.trash.add(message)
+    elif p.outbox.filter(pk = message.id).exists():
+        p.outbox.remove(message)
+        p.trash.add(message)
+    p.save()
+    message.save()
+    return render(request, "simplemail/message.html", {'message': "Your message was deleted."})
