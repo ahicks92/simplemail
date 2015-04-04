@@ -44,3 +44,6 @@ class UserProfile(models.Model):
     inbox=models.ManyToManyField(Email, related_name='inbox_users')
     outbox=models.ManyToManyField(Email, related_name= 'outbox_users')
     trash=models.ManyToManyField(Email, related_name='trash_users')
+    #This lets us tell if a message was sent or inbox after it was deleted:
+    trash_sent = models.ManyToManyField(Email, related_name = 'trash_sent_users')
+
