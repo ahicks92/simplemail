@@ -87,11 +87,33 @@ def create_account(request):
         auth.login(request, u)
         return render(request, "simplemail/message.html", {'message': "Your account was created successfully.  Your e-mail is {}@simplemail.camlorn.net".format(username)})
 
+def show_folder(request, messages, folder_title, action_view= None, action_text=""):
+    return render(request, "simplemail/folder.html", {
+        'messages': messages,
+        'folder_title': folder_title,
+        'has_action': action_view is not None,
+        'action_view': action_view,
+        'action_text': action_text,
+    })
+
+
 @login_required
 @transaction.atomic
 def inbox(request):
     messages= request.user.profile.inbox.all().order_by('-date')
-    return render(request, "simplemail/inbox.html", {'messages': messages})
+    return show_folder(request, messages, "Inbox", "delete_message", "Delete This Message")
+
+@login_required
+@transaction.atomic
+def outbox(request):
+    messages= request.user.profile.outbox.all().order_by('-date')
+    return show_folder(request, messages, "Sent Messages", "delete_message", "Delete This Message")
+
+@login_required
+@transaction.atomic
+def trash(request):
+    messages= request.user.profile.trash.all().order_by('-date')
+    return show_folder(request, messages, "Deleted Messages")
 
 #all of the following views manipulate individual messages.
 #This helper function tells us if a user owns a message.
@@ -114,16 +136,50 @@ def view_message(request, message_id):
 @transaction.atomic
 def send_message(request):
     if request.method== 'GET':
-        form=simplemail.forms.SendEmailForm()
-        return render(request, "simplemail/send_message.html", {'form': form})
+        return simplemail.forms.render_send_message_form(request)
     if request.method== 'POST':
         form=simplemail.forms.SendEmailForm(request.POST)
         if not form.is_valid():
-            return render(request, "simplemail/send_message.html", {'form': form})
+            return simplemail.forms.render_send_message_form(request, form)
         #Okay, we can send the e-mail.
-        result=send_email(request.user.profile.email, [i.to_unicode() for i in form.cleaned_data['to']],
-            form.cleaned_data['subject'], form.cleaned_data['message'])
-        message="Your message has been sent."
+        to_addresses = [i.to_unicode() for i in form.cleaned_data['to']]
+        subject=form.cleaned_data['subject']
+        body = form.cleaned_data['message']
+        result=send_email(request.user.profile.email, to_addresses, subject, body)
         if result.status_code!=200: #mailgun error.
             message= "Sorry, but something has gone wrong.  Please send us the following info:\n\n"+result.json()['message']
-        return render(request, "simplemail/message.html", {'message': message})
+            return render(request, "simplemail/message.html", {'message': message})
+        new_message_id= result.json()['id']
+        new_message = models.Email.objects.create(
+            message_id = new_message_id,
+            subject= subject,
+            from_address = request.user.profile.email,
+        all_addresses = request.user.profile.email + "," + ",".join(to_addresses),
+        body= body,
+        body_stripped=body,
+        signature = "",
+    )
+    new_message.save()
+    request.user.profile.outbox.add(new_message)
+    request.user.profile.save()
+    return render(request, "simplemail/message.html", {'message': "Your message has been sent."})
+
+@login_required
+@transaction.atomic
+def delete_message(request, id):
+    message = models.Email.objects.get(pk = id)
+    if not can_manipulate_message(request.user.profile, message):
+        return render(request, "simplemail/message.html", {'message': "You cannot delete this message."})
+    p=request.user.profile
+    if p.trash.filter(pk=message.id).exists():
+        return render(request, "simplemail/message.html", {'message': "This message was already deleted."})
+    elif p.inbox.filter(pk=message.id).exists():
+        p.inbox.remove(message)
+        p.trash.add(message)
+    elif p.outbox.filter(pk = message.id).exists():
+        p.outbox.remove(message)
+        p.trash.add(message)
+        p.trash_sent.add(message)
+    p.save()
+    message.save()
+    return render(request, "simplemail/message.html", {'message': "Your message was deleted."})

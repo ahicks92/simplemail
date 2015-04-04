@@ -39,7 +39,6 @@ class AccountCreationForm(forms.Form):
     confirm_password=forms.CharField(widget= forms.PasswordInput, min_length =5)
     first_name = forms.CharField(min_length = 1)
     last_name=forms.CharField(min_length= 1)
-    signature = forms.CharField(widget =forms.Textarea)
 
     def clean(self):
         username=self.cleaned_data.get("user_name")
@@ -56,5 +55,16 @@ def render_account_creation_form(request, form = None):
         'form_title': "Create an account",
         'submit_label': "Create Account",
         'next_url': urlresolvers.reverse("create_account"),
+    }
+    return render(request, "simplemail/form.html", context)
+
+def render_send_message_form(request, form = None):
+    if form is None:
+        form = SendEmailForm()
+    context = {
+        'form': form,
+        'form_title': "Send Message",
+        'submit_label': "Send",
+        'next_url': urlresolvers.reverse("send_message"),
     }
     return render(request, "simplemail/form.html", context)
