@@ -8,7 +8,7 @@ import datetime
 #Also, there's basically no limits on lengths by the e-mail specs. Consequently we have to overuse TextField.
 class Email(models.Model):
     #The Mailgun API sends us blobs of text. We pull out the really important info for database queries.
-    #Even so, keeping this around lets us do post-processing on it.
+    #Even so, keeping this around lets us do post-processing on it in the future, if we need to.
     mailgun_json =models.TextField()
 
     #The message_id is used for constructing reply chains and is extracted from a mail header.
