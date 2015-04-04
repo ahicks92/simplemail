@@ -103,6 +103,18 @@ def inbox(request):
     messages= request.user.profile.inbox.all().order_by('-date')
     return show_folder(request, messages, "Inbox", "delete_message", "Delete This Message")
 
+@login_required
+@transaction.atomic
+def outbox(request):
+    messages= request.user.profile.outbox.all().order_by('-date')
+    return show_folder(request, messages, "Sent Messages", "delete_message", "Delete This Message")
+
+@login_required
+@transaction.atomic
+def trash(request):
+    messages= request.user.profile.trash.all().order_by('-date')
+    return show_folder(request, messages, "Deleted Messages")
+
 #all of the following views manipulate individual messages.
 #This helper function tells us if a user owns a message.
 def can_manipulate_message(profile, message):
