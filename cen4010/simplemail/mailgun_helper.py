@@ -24,6 +24,5 @@ def send_email(from_address, to_addresses, subject, body):
     'text': body,
     'subject': subject,
     }
-    import pdb;pdb.set_trace()
     r = mpost("messages", data)
     return r
