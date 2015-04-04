@@ -90,7 +90,7 @@ button.register{
     color:black;
 }
 
-a{
+a,p{
     color: black;
     text-decoration:none;
 }
