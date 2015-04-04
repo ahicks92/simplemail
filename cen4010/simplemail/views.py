@@ -164,6 +164,7 @@ def delete_message(request, id):
     elif p.outbox.filter(pk = message.id).exists():
         p.outbox.remove(message)
         p.trash.add(message)
+        p.trash_sent.add(message)
     p.save()
     message.save()
     return render(request, "simplemail/message.html", {'message': "Your message was deleted."})
