@@ -39,7 +39,6 @@ class AccountCreationForm(forms.Form):
     confirm_password=forms.CharField(widget= forms.PasswordInput, min_length =5)
     first_name = forms.CharField(min_length = 1)
     last_name=forms.CharField(min_length= 1)
-    signature = forms.CharField(widget =forms.Textarea)
 
     def clean(self):
         username=self.cleaned_data.get("user_name")
