@@ -27,7 +27,7 @@ body {
 
 .content {
     width: 100%;
-    position: absolute;
+    height: 100%;
     padding: 15px;
 }
 
@@ -126,7 +126,6 @@ body {
 
     .content {
         padding: 20px;
-        position: relative;
     }
 
     .wrapper.toggled .content {
@@ -138,7 +137,7 @@ body {
 /* footer */
 
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
