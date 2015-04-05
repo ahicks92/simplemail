@@ -154,15 +154,16 @@ def send_message(request):
             message_id = new_message_id,
             subject= subject,
             from_address = request.user.profile.email,
-        all_addresses = request.user.profile.email + "," + ",".join(to_addresses),
-        body= body,
-        body_stripped=body,
-        signature = "",
-    )
-    new_message.save()
-    request.user.profile.outbox.add(new_message)
-    request.user.profile.save()
-    return render(request, "simplemail/message.html", {'message': "Your message has been sent."})
+            all_addresses = request.user.profile.email + "," + ",".join(to_addresses),
+            to_addresses = ",".join(to_addresses),
+            body= body,
+            body_stripped=body,
+            signature = "",
+        )
+        new_message.save()
+        request.user.profile.outbox.add(new_message)
+        request.user.profile.save()
+        return render(request, "simplemail/message.html", {'message': "Your message has been sent."})
 
 @login_required
 @transaction.atomic
