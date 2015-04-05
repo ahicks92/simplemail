@@ -1,18 +1,30 @@
 {% extends "simplemail/base_application.html" %}
 
 {% block page %}
-   <table>
-        {%for m in messages%}
-     <tr>
-         <td class="col-md-2"><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
-         <td class="col-md-2"><span class="long-string">{{m.body}}</span></td>
-         <td class="col-md-2">{{m.from_address}}</td>
-         <td class="col-md-2">{{m.date}}</td>
-         {%if has_action%}
-         <td class="col-md-2"><a href="{%url action_view m.id%}">{{action_text}}</a></td>
-         {%endif%}
-        {%endfor%}
-     </tr>
+   <table class="table">
+       <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Body</th>
+                <th>From</th>
+                <th>Date</th>
+                <th>Delete?</th>
+            </tr>
+       </thead>
+       <tbody>
+       {%for m in messages%}
+
+            <tr>
+                 <td class="col-md-2"><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
+                 <td class="col-md-2"><span class="long-string">{{m.body}}</span></td>
+                 <td class="col-md-2">{{m.from_address}}</td>
+                 <td class="col-md-2">{{m.date}}</td>
+                 {%if has_action%}
+                    <td class="col-md-2"><a href="{%url action_view m.id%}">{{action_text}}</a></td>
+                 {%endif%}
+             </tr>
+         {%endfor%}
+       </tbody>
     </table>
 
 {% endblock page %}
