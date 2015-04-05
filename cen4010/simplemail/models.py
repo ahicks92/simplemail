@@ -21,6 +21,7 @@ class Email(models.Model):
     #This is a very ugly concatenation of a bunch of stuff.
     #The result is a comma-separated list of e-mail addresses plus some extra data.
     all_addresses = models.TextField()
+    to_addresses =models.TextField()
 
     #E-mail body.
     body = models.TextField()
