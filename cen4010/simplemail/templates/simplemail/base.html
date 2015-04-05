@@ -17,5 +17,19 @@
 <body>
     {% block body %}
     {% endblock body %}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+     <script type="text/javascript">
+            /* limit the number of characters shown in a string */
+            $(document).ready(function () { //
+                $(".long-string").each(function () {
+                    var maxwidth = 30;
+                    if ($(this).text().length > maxwidth) {
+                        $(this).text($(this).text().substring(0, maxwidth));
+                        $(this).html($(this).html() + '...');
+                    }
+                });
+            });
+     </script>
 </body>
 </html>

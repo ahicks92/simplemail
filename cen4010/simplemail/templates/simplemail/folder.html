@@ -5,9 +5,9 @@
         {%for m in messages%}
      <tr>
          <td class="col-md-2"><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
+         <td class="col-md-2"><span class="long-string">{{m.body}}</span></td>
          <td class="col-md-2">{{m.from_address}}</td>
          <td class="col-md-2">{{m.date}}</td>
-         <td class="col-md-2">{{message_body}}</td>
          {%if has_action%}
          <td class="col-md-2"><a href="{%url action_view m.id%}">{{action_text}}</a></td>
          {%endif%}
