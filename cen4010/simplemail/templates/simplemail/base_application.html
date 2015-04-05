@@ -12,7 +12,8 @@
     <ul class="sidebar-nav">
         <li class="side-btn"><a href="{%url 'inbox'%}" class="btn btn-default">Inbox</a></li>
         <li class="side-btn"><a href="{%url 'send_message'%}" class="btn btn-default">Send Message</a></li>
-        <li class="side-btn"><a class="btn btn-default">Trash</a></li>
+        <li class="side-btn"><a href="{%url 'trash'%}" class="btn btn-default">Trash</a></li>
+        <li class="side-btn"><a href="{%url 'outbox'%}" class="btn btn-default">Outbox</a></li>
         <li class="side-btn"><a class="btn btn-default">Logout</a></li>
     </ul>
 {% endblock sidebar %}
