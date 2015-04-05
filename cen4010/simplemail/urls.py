@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
 from . import views
+# Import reverse_lazy method for reversing names to URLs
+from django.core.urlresolvers import reverse_lazy
 
 urlpatterns=patterns('',
     url(r'^get_all_mailgun_messages$', views.get_all_mailgun_messages, name='get_all_mailgun_messages'),
@@ -10,4 +12,8 @@ urlpatterns=patterns('',
     url(r'^delete_message/(\d+)', views.delete_message, name ='delete_message'),
     url(r'^outbox', views.outbox, name='outbox'),
     url(r'^trash', views.trash, name='trash'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout',
+          {
+            "next_page" : reverse_lazy('login')
+          }, name="logout")
 )
