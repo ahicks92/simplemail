@@ -167,6 +167,42 @@ def send_message(request):
 
 @login_required
 @transaction.atomic
+def reply_to_message(request, id):
+    replying_to = models.Email.objects.get(pk = id)
+    if not can_manipulate_message(request.user.profile, replying_to):
+        return render(request, "simplemail/message.html", {'message': "You cannot reply to this message."})
+    if request.method== 'GET':
+        return simplemail.forms.render_reply_to_message_form(request, in_reply_to= replying_to)
+    if request.method== 'POST':
+        form=simplemail.forms.ReplyToEmailForm(request.POST)
+        if not form.is_valid():
+            return simplemail.forms.render_reply_to_message_form(request, form, in_reply_to=replying_to)
+        #Okay, we can send the e-mail.
+        to_addresses = [i.to_unicode() for i in form.cleaned_data['to']]
+        subject=form.cleaned_data['subject']
+        body = form.cleaned_data['message']
+        result=send_email(request.user.profile.email, to_addresses, subject, body, in_reply_to=replying_to.message_id)
+        if result.status_code!=200: #mailgun error.
+            message= "Sorry, but something has gone wrong.  Please send us the following info:\n\n"+result.json()['message']
+            return render(request, "simplemail/message.html", {'message': message})
+        new_message_id= result.json()['id']
+        new_message = models.Email.objects.create(
+            message_id = new_message_id,
+            subject= subject,
+            from_address = request.user.profile.email,
+            all_addresses = request.user.profile.email + "," + ",".join(to_addresses),
+            to_addresses = ",".join(to_addresses),
+            body= body,
+            body_stripped=body,
+            signature = "",
+        )
+        new_message.save()
+        request.user.profile.outbox.add(new_message)
+        request.user.profile.save()
+        return render(request, "simplemail/message.html", {'message': "Your reply has been sent."})
+
+@login_required
+@transaction.atomic
 def delete_message(request, id):
     message = models.Email.objects.get(pk = id)
     if not can_manipulate_message(request.user.profile, message):

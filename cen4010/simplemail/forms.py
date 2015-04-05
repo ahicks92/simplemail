@@ -68,3 +68,18 @@ def render_send_message_form(request, form = None):
         'next_url': urlresolvers.reverse("send_message"),
     }
     return render(request, "simplemail/form.html", context)
+
+def render_reply_to_message_form(request, form = None, in_reply_to = None):
+    """in_reply_to should be a database model representing a message"""
+    if form is None:
+        form = ReplyToEmailForm({\
+        'in_reply_to': in_reply_to.message_id,
+        'subject': "Re:" + in_reply_to.subject if not in_reply_to.subject.startswith("Re:") else in_reply_to.subject,
+        'to': in_reply_to.from_address})
+    context = {
+        'form': form,
+        'form_title': "Reply To Message",
+        'submit_label': "Reply",
+        'next_url': urlresolvers.reverse("reply_to_message", args= (in_reply_to.id, )),
+    }
+    return render(request, "simplemail/form.html", context)
