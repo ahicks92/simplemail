@@ -9,6 +9,8 @@
     </ul>
     {{message.body | linebreaks}}
     {%endautoescape%}
+{% endblock page %}
+{% block footer %}
     <footer class="footer">
         <div class="row">
         <ul class="bottombar-nav">
@@ -18,4 +20,4 @@
          </ul>
         </div>
     </footer>
-{% endblock page %}
+{% endblock footer %}
