@@ -4,12 +4,12 @@
    <table>
         {%for m in messages%}
      <tr>
-         <td><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
-         <td>{{m.from_address}}</td>
-         <td>{{m.date}}</td>
-         <td>{{message_body}}</td>
+         <td class="col-md-2"><a href={%url "view_message" m.id%}>{{m.subject}}</a></td>
+         <td class="col-md-2">{{m.from_address}}</td>
+         <td class="col-md-2">{{m.date}}</td>
+         <td class="col-md-2">{{message_body}}</td>
          {%if has_action%}
-         <td><a href="{%url action_view m.id%}">{{action_text}}</a></td>
+         <td class="col-md-2"><a href="{%url action_view m.id%}">{{action_text}}</a></td>
          {%endif%}
         {%endfor%}
      </tr>
