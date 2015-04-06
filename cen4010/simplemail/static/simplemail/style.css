@@ -17,12 +17,12 @@ body {
 }
 
 .wrapper.toggled {
-    padding-left: 150px;
+    padding-left: 180px;
 }
 
 
 .wrapper.toggled .sidebar {
-    width: 150px;
+    width: 180px;
 }
 
 .content {
@@ -33,19 +33,19 @@ body {
 
 .wrapper.toggled .content {
     position: absolute;
-    margin-right: -150px;
+    margin-right: -180px;
 }
 /* Sidebar Styles */
 
 .sidebar{
     z-index: 1000;
     position: fixed;
-    left: 150px;
+    left: 180px;
     width: 0;
     height: 100%;
-    margin-left: -150px;
+    margin-left: -180px;
     overflow-y: auto;
-    background: #CDA986;
+    background: #221100;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -55,27 +55,28 @@ body {
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 150px;
+    width: 180px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 .sidebar-nav li {
-    text-indent: 10px;
+   // text-indent: 10px;
     line-height: 40px;
 }
 
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #000000;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #fff;
-    background: rgba(255,255,255,0.2);
+    //background: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,1);
 }
 
 .sidebar-nav li a:active,
@@ -99,7 +100,11 @@ body {
 }
 
 .btn-default{
-    width:125px;
+    width:150px;
+}
+
+.btn{
+    font-size:18px;
 }
 
 .side-btn{
@@ -109,7 +114,7 @@ body {
 
 @media(min-width:768px) {
     .wrapper {
-        padding-left: 150px;
+        padding-left: 180px;
     }
 
    .wrapper.toggled {
@@ -117,7 +122,7 @@ body {
     }
 
     .sidebar {
-        width: 150px;
+        width: 180px;
     }
 
     .wrapper.toggled .sidebar {
@@ -144,7 +149,7 @@ body {
     height: 60px;
     background-color: #f5f5f5;
     padding-left: 200px;
-     margin-left: -150px;
+     margin-left: -180px;
   }
 
 .bottombar-nav{
