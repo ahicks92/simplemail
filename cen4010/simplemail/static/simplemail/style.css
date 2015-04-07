@@ -139,6 +139,10 @@ body {
     }
 }
 
+p{
+    font-size: 18px;
+}
+
 /* footer */
 
 .footer {
@@ -163,3 +167,39 @@ body {
     padding-top: 15px;
 }
 
+/* form styles */
+input:focus{
+  box-shadow: inset 0 1px 1px
+  rgba(186, 186, 186, 1), 0 0 25px
+  rgba(110, 110, 110, 1);
+}
+form.login input[type="text"]{
+    width: 50%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #474747;
+    outline: 0;
+    font-style: italic;
+    font-size: 14px;
+    font-weight: 400;
+	font-family: 'Open Sans' , sans-serif;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #000000;
+    outline: 0;
+
+}
+
+.errorlist{
+    color: rgb(195, 0, 0)
+}
+
+#to_field{
+    width:55%;
+}
+
+table{
+    font-size: larger;
+}

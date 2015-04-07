@@ -23,7 +23,7 @@ form.login input[type="text"], form.login input[type="password"]{
     border-bottom: 1px solid #474747;
     outline: 0;
     font-style: italic;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
 	font-family: 'Open Sans' , sans-serif;
     letter-spacing: 1px;
@@ -35,7 +35,7 @@ form.login input[type="text"], form.login input[type="password"]{
 
 form.login input[type="submit"], .register{
     width: 100%;
-    font-size: 14px;
+    font-size: 18px;
     text-transform: uppercase;
     font-weight: 500;
     margin-top: 16px;
@@ -48,7 +48,7 @@ form.login input[type="submit"]:hover{
     transition: background-color 0.5s ease;
 }
 form.login label, form.login a{
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 400;
     color: #000000;
     text-decoration: none;
@@ -109,6 +109,8 @@ ul{
 h1{
     color:black;
     text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.27);
+}
 
+hr{
+    border-top: 1px solid #000;
 }
