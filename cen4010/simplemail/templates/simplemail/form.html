@@ -1,13 +1,7 @@
-{%extends "simplemail/base_main.html"%}
-<!-- the create account form needs to extend base_main otherwise the user would
-be able to see inside of the application (i.e. the sidebar with inbox, send message,
-trash and logout. -->
-{% block styles %}
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'simplemail/login.css' %}" />
-{% endblock styles %}
+{% extends "simplemail/base_application.html" %}
 
-{%block content%}
+
+{% block page %}
     <h1>{{form_title | escape}}</h1>
     <form class="login" action="{{next_url}}" method="post">
         {%csrf_token%}
@@ -25,4 +19,4 @@ trash and logout. -->
         <input type="submit" value="{{submit_label | escape}}"/>
     </form>
 
-{%endblock content%}
+{% endblock page %}
