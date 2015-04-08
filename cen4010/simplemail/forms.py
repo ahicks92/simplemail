@@ -26,7 +26,8 @@ class SendEmailForm(forms.Form):
     #To that end, we can't use the Django e-mail field because it only takes one address.
     to =MultiEmailField(help_text ="Enter the e-mail address(s) of the recipients. To enter multiple addresses, separate them with , (comma).")
     subject =forms.CharField(min_length= 1, max_length= 200)
-    message=forms.CharField(widget=forms.Textarea(attrs={'rows': 50, 'cols': 80}),
+    #message=forms.CharField(widget=forms.Textarea(attrs={'rows': 50, 'cols': 80}),
+    message=forms.CharField(widget=forms.Textarea,
     help_text= "Enter the body of your message.")
 
 #This inherits all the above stuff, except that it contains a hidden field that we use to funnel an In-Reply-To header.

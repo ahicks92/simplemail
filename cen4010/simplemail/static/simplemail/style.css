@@ -168,7 +168,7 @@ p{
 }
 
 /* form styles */
-input:focus{
+input:focus, textarea:focus{
   box-shadow: inset 0 1px 1px
   rgba(186, 186, 186, 1), 0 0 25px
   rgba(110, 110, 110, 1);
@@ -202,4 +202,8 @@ form.login input[type="text"]{
 
 table{
     font-size: larger;
+}
+
+textarea{
+    width: 100%;
 }
