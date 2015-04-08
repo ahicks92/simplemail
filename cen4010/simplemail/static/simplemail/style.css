@@ -208,3 +208,7 @@ textarea{
     width: 100%;
     color: black;
 }
+
+ul{
+  font-size: 16px;
+}
