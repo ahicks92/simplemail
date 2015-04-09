@@ -6,6 +6,9 @@
 {% endblock styles %}
 
 {% block content %}
+    <h1>Simple Mail</h1>
+    <h1>Log In</h1>
+    <hr>
 	<form class="login" action="/accounts/login/?next={{next}}" method="post">
 		{%csrf_token%}
 		{{form}}
