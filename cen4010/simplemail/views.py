@@ -1,3 +1,5 @@
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import pdb
 from django.shortcuts import render
 from django.db import transaction
@@ -12,8 +14,7 @@ import json
 import simplemail.forms
 import flanker.addresslib
 
-def incoming_message(message_json):
-    message_dict = json.loads(message_json)
+def incoming_message(message_dict):
     #We first extract the message id, which is supposed to be unique for all e-mails everywhere.
     headers=message_dict['message-headers']
     #Nothing actually stops someone sending a message with multiple headers of the same type.
@@ -41,7 +42,6 @@ def incoming_message(message_json):
         return False
     #We now have enough info to build the message itself as follows.
     new_message=models.Email(
-        mailgun_json = message_json,
         message_id=id,
         subject=message_dict['subject'],
         from_address=message_dict['from'],
@@ -68,9 +68,31 @@ def get_all_mailgun_messages(request):
     count = 0
     #For each message, we make an e-mail model and save it.
     for i in messages_json:
-        if incoming_message(i) == True:
+        if incoming_message(json.loads(i)) == True:
             count +=1
     return render(request, 'simplemail/mailgun_got_messages.html', {'count': count})
+
+@csrf_exempt
+@transaction.atomic
+def incoming_message_view(request):
+    if request.method == "GET":
+        return render(request, "simplemail/message.html", {'message': "This is for mailgun messages only."})
+    else:
+        d =dict(request.POST)
+        print d['from'], d['To']
+        d['subject'] =d['subject'][0]
+        d['body-plain'] = d['body-plain'][0]
+        d['stripped-text'] = d.get('stripped-text', [""])[0]
+        d['stripped-signature'] = d.get('stripped-signature', [""])[0]
+        d['message-headers'] = json.loads(d['message-headers'][0]) #Fix this. When posting, it's a string.
+        d['recipients'] = ",".join(d['recipient'])
+        d['from'] = ",".join(d['from'])
+        d['To'] = ",".join(d['To'])
+        res = incoming_message(d)
+        if res:
+            return HttpResponse("Message accepted", status=200)
+        else:
+            return HttpResponse("Message rejected", status=406)
 
 #Create an account.
 @transaction.atomic

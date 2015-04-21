@@ -4,6 +4,7 @@ from . import views
 from django.core.urlresolvers import reverse_lazy
 
 urlpatterns=patterns('',
+    url(R'^$', views.inbox),
     url(r'^get_all_mailgun_messages$', views.get_all_mailgun_messages, name='get_all_mailgun_messages'),
     url(r'^inbox$', views.inbox, name='inbox'),
     url(r'^view_message/(\d+)$', views.view_message, name='view_message'),
@@ -16,5 +17,8 @@ urlpatterns=patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout',
           {
             "next_page" : reverse_lazy('login')
-          }, name="logout")
+          }, name="logout"),
+
+    #Mailgun's url
+    url(r'^incoming_message$', views.incoming_message_view),
 )
