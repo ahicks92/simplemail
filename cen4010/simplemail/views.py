@@ -75,11 +75,10 @@ def create_account(request):
             return simplemail.forms.render_account_creation_form(request, form = form)
         username=form.cleaned_data.get("user_name")
         password= form.cleaned_data.get("password")
-        signature = form.cleaned_data.get("signature")
         first_name= form.cleaned_data.get("first_name")
         last_name= form.cleaned_data.get("last_name")
         user = django.contrib.auth.models.User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password= password)
-        profile= models.UserProfile(email=username+"@simplemail.camlorn.net", first_name=first_name, last_name=last_name, signature=signature, user= user)
+        profile= models.UserProfile(email=username+"@simplemail.camlorn.net", first_name=first_name, last_name=last_name, user= user)
         user.save()
         profile.save()
         #Django makes us go through the login API "properly", so we do.

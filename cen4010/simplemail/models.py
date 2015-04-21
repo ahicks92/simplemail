@@ -26,7 +26,7 @@ class Email(models.Model):
     #E-mail body.
     body = models.TextField()
     body_stripped=models.TextField()
-    signature =models.TextField()
+    signature =models.TextField(default = '')
 
 class UserProfile(models.Model):
 
@@ -35,7 +35,7 @@ class UserProfile(models.Model):
 
     first_name=models.CharField(max_length=255)
     last_name= models.CharField(max_length=255)
-    signature= models.TextField()
+    signature= models.TextField(default = '')
     #This establishes a link with the user account for this profile.
     #It also adds a .profile to all users under this Django project.
     user= models.OneToOneField(User, related_name= 'profile')

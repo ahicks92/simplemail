@@ -44,9 +44,9 @@ class AccountCreationForm(forms.Form):
     def clean(self):
         username=self.cleaned_data.get("user_name")
         if django.contrib.auth.models.User.objects.filter(username= username).exists():
-            raise validationError("Your username is already in use.  Please try another.")
+            raise forms.ValidationError("Your username is already in use.  Please try another.")
         if self.cleaned_data.get("password") !=self.cleaned_data.get("confirm_password"):
-            raise ValidationError("Your password does not match with the password entered in 'confirm password'.  Please re-enter it in both fields and try again.")
+            raise forms.ValidationError("Your password does not match with the password entered in 'confirm password'.  Please re-enter it in both fields and try again.")
 
 def render_account_creation_form(request, form = None):
     if form is None:

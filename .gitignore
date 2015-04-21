@@ -58,3 +58,6 @@ cen4010/db.sqlite3
 #magic batch file of authentication magic that contains sensitive information.
 authenticate.bat
 cen4010/cen4010/settings.py
+logs/
+
+authenticate.sh #Sets mailgun api key, cannot be in repo.
